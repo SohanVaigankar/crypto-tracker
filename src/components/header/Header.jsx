@@ -44,9 +44,9 @@ const Header = () => {
               className="bg-utility-bg cursor-pointer py-[0.5rem] px-1 rounded-[8px] text-center font-[600]"
               onClick={handleOnClick}
             >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={25}>25</option>
+              <option value={10} style={{width:"5rem"}}>10</option>
+              <option value={20} style={{width:"5rem"}}>20</option>
+              <option value={25} style={{width:"5rem"}}>25</option>
             </select>
           </div>
         </div>

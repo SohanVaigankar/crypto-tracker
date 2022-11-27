@@ -20,7 +20,7 @@ const Carousel = () => {
 
   return (
     <div className="bg-secondary-bg">
-      <div className="carousel-top flex justify-center items-center w-[95%] md:w-[85%] lg:w-[80%] mx-auto px-5 py-6 md:gap-5  xl:gap-[3%]">
+      <div className="carousel-top flex justify-center items-center w-[95%] md:w-[90%] lg:w-[85%] mx-auto px-5 py-6 md:gap-5  xl:gap-[3%]">
         <img
           src={leftIcon}
           alt="left"
@@ -65,7 +65,7 @@ const Carousel = () => {
         {carouselData.map((data, index) => (
           <li
             className="p-[3px] h-1 w-1 rounded-full border-solid border-[1px] border-pagination-font cursor-pointer"
-            key={index} onClick={carouselData[index]}
+            key={index}
           ></li>
         ))}
       </ul>

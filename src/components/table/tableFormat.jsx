@@ -23,16 +23,16 @@ function convertNumbers(num) {
 }
 
 const listOfClasses = [
-  "w-[5%]  md:w-[2%]",
+  "w-[3.5%] sm:w-[5%]  md:w-[2%]",
   "hidden md:flex md:w-[1%] -ml-3 lg:ml-0 lg:w-[1.5%] text-center ",
-  "w-[30%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%]",
+  "-ml-1 sm:ml-0 w-[40%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%]",
   "w-[25%] sm:w-[20%] md:w-[16%] md:w-[12%] xl:w-[6%] text-end",
   "w-[15%] sm:w-[12%] md:w-[8%] xl:w-[7%] text-end",
   "hidden lg:flex lg:w-[8%] xl:w-[7%] text-end justify-end",
   " hidden sm:flex sm:w-[15%] md:w-[10%] xl:w-[15%] text-end justify-end",
   " hidden md:flex md:w-[10%] xl:w-[13%] text-end justify-end",
   " hidden xl:flex xl:w-[13%] text-end justify-end",
-  "w-[5%] md:w-[3%]",
+  "hidden sm:flex sm:w-[5%] md:w-[3%]",
 ];
 
 export const tableColumns = [
@@ -74,7 +74,7 @@ export const tableColumns = [
       let symbol = params.instrument.symbol;
       return (
         <div
-          className={`image-cell flex justify-start items-center gap-2 text-start ${listOfClasses[2]}`}
+          className={`image-cell flex justify-start items-center gap-[0.3rem] sm:gap-2 text-start ${listOfClasses[2]}`}
           key={params.tableIndex}
         >
           <img
@@ -83,7 +83,7 @@ export const tableColumns = [
             alt="avatar"
           />
           <div>{params.instrument.name}</div>
-          <div className="text-[#808A9D] text-[0.8rem]">
+          <div className="text-[#808A9D] text-[0.75rem]">
             {symbol.toUpperCase()}
           </div>
         </div>
