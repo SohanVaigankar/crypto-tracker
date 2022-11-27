@@ -17,7 +17,7 @@ const App = () => {
   return (
     <>
       {modal && <Modal />}
-      <div className="app absolute top-0 h-screen z-0">
+      <div className="app z-0">
         <Navbar />
         <Carousel />
         <Header />

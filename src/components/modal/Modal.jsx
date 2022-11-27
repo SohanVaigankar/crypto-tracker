@@ -20,7 +20,7 @@ const Modal = ({}) => {
   ).toLocaleString();
 
   return (
-    <div className=" w-full h-[130vh] bg-[#0000005a]  sticky top-0 left-0 flex justify-center items-center z-10 p-5 font-[600] ">
+    <div className=" w-full h-[100vh] bg-[#0000005a]  sticky top-0 left-0 flex justify-center items-center z-10 p-5 font-[600] ">
       <div className="modal-info sticky top-0 w-full px-5 py-6 bg-[#FFFFFF] border-[#DBDCDF] rounded-[8px]  text-[#0F1629]  z-20 flex flex-col gap-4 text-[0.85rem]">
         {/*header */}
         <div className="flex justify-between items-center ">
