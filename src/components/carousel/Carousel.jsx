@@ -36,7 +36,7 @@ const Carousel = () => {
                       ? "w-[33%]"
                       : carouselLimit === 2
                       ? "w-[50%]"
-                      : "w-[90%] sm:w-[80%]"
+                      : "w-[85%] sm:w-[75%]"
                   }`}
                   key={index}
                 >

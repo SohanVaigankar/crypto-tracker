@@ -7,9 +7,15 @@ import gapUpIcon from "../../assets/icons/gap_up_icon.svg";
 import { CLOSE_MODAL } from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
+import useResolution from "../../hooks/useResolution";
+
 const Modal = ({}) => {
   // context
   const { modal, dispatch } = useContext(CryptoContext);
+
+  const screenWidth = useResolution();
+
+  screenWidth > 640 ? dispatch({ type: CLOSE_MODAL }) : "";
 
   // currency movement percentages for 24 hours and 7 Days
   let percentage1D = parseFloat(
@@ -19,11 +25,23 @@ const Modal = ({}) => {
     modal.price_change_percentage_24h_in_currency.toFixed(2)
   ).toLocaleString();
 
+  const handleBackdropClick = async (e) => {
+    e.preventDefault();
+    if (e.target.classList.contains("modal-backdrop")) {
+      await dispatch({ type: CLOSE_MODAL });
+    }
+  };
+
   return (
-    <div className=" w-full h-[100vh] bg-[#0000005a]  sticky top-0 left-0 flex justify-center items-center z-10 p-5 font-[600] ">
-      <div className="modal-info sticky top-0 w-full px-5 py-6 bg-[#FFFFFF] border-[#DBDCDF] rounded-[8px]  text-[#0F1629]  z-20 flex flex-col gap-4 text-[0.85rem]">
+    <div
+      className={`${
+        modal && "modal-backdrop"
+      } w-full h-[100vh] bg-[#0000005a]  fixed top-0 left-0 flex justify-center items-center z-10 p-5 font-[600] `}
+      onClick={handleBackdropClick}
+    >
+      <div className="modal-info sticky top-0 w-full px-5 pt-5 pb-10 bg-[#FFFFFF] border-[#DBDCDF] rounded-[8px]  text-[#0F1629]  z-20 flex flex-col gap-4 text-[0.85rem]">
         {/*header */}
-        <div className="flex justify-between items-center ">
+        <div className="flex justify-between items-center mb-3">
           <div className="flex justify-start items-center gap-2">
             <img src={modal?.image} alt={modal?.name} className={`h-7 w-7`} />
             <p>{modal?.name.toUpperCase()}</p>

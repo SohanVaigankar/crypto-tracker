@@ -16,12 +16,12 @@ const App = () => {
   const { modal } = useContext(CryptoContext);
   return (
     <>
-      {modal && <Modal />}
       <div className="app z-0">
         <Navbar />
         <Carousel />
         <Header />
         <Table />
+        {modal && <Modal />}
       </div>
     </>
   );
