@@ -4,6 +4,7 @@ import "./table.css";
 // components
 import Pagination from "../pagination/Pagination";
 import useResolution from "../../hooks/useResolution";
+import Loader from "../loader/Loader";
 
 // context
 import { LOAD_DATA, OPEN_MODAL } from "../../context/action.types";
@@ -13,26 +14,8 @@ import { CryptoContext } from "../../context/CryptoContext";
 
 const Table = () => {
   // context
-  const { dispatch, cryptoData, itemsPerPage, currentPage } =
+  const { dispatch, cryptoData, itemsPerPage, currentPage, isLoading } =
     useContext(CryptoContext);
-
-  // fetching  crypto data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiURL = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&amp;order=market_cap_desc&amp;per_page=100&amp;page=1&amp;sparkline=false&amp;price_change_percentage=24h%2C7d`;
-        const res = await fetch(apiURL);
-        const data = await res.json();
-        if (data) {
-          await dispatch({ type: LOAD_DATA, payload: { cryptoData: data } });
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   // pagination
   // indices of page item of the current page
@@ -72,24 +55,28 @@ const Table = () => {
           </div>
         ))}
       </div>
-      {currentPageItems != []
-        ? currentPageItems.map((instrument, index,) => (
+
+      {isLoading && <Loader />}
+      {!isLoading && currentPageItems != [] && (
+        <>
+          {currentPageItems.map((instrument, index) => (
             <div
               className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer p-4  gap-1"
               onClick={(e) => handleModal(e, instrument)}
               key={index}
             >
               {tableColumns.map((col, tableIndex) =>
-                col.renderCell({ instrument, index, screenWidth, tableIndex})
+                col.renderCell({ instrument, index, screenWidth, tableIndex })
               )}
             </div>
-          ))
-        : ""}
-      <Pagination
-        indexOfLastItem={indexOfLastItem}
-        indexOfFirstItem={indexOfFirstItem}
-        currentPageItems={currentPageItems}
-      />
+          ))}
+          <Pagination
+            indexOfLastItem={indexOfLastItem}
+            indexOfFirstItem={indexOfFirstItem}
+            currentPageItems={currentPageItems}
+          />
+        </>
+      )}
     </div>
   );
 };

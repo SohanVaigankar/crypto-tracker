@@ -3,13 +3,15 @@ import {
   SET_CURRENT_PAGE,
   OPEN_MODAL,
   CLOSE_MODAL,
-  SET_ITEMS_PER_PAGE,
+  SET_ITEMS_PER_PAGE,TOGGLE_LOADING
 } from "../action.types";
 
 export const CryptoReducer = (state, action) => {
   switch (action.type) {
     case LOAD_DATA:
       return { ...state, cryptoData: action.payload.cryptoData };
+    case TOGGLE_LOADING:
+      return { ...state, isLoading: !state.isLoading };
     case OPEN_MODAL:
       return { ...state, modal: action.payload.modal };
     case CLOSE_MODAL:

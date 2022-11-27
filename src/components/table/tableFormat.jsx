@@ -224,15 +224,23 @@ export const tableColumns = [
           className={`circulation flex flex-col justify-center items-end gap-1 ${listOfClasses[8]}`}
           key={params.tableIndex}
         >
-          <p>{`${
-            params.screenWidth < 1280
-              ? convertNumbers(currentSupply)
-              : parseFloat(currentSupply.toFixed(2)).toLocaleString()
-          }`}</p>
+          <div className="flex gap-1">
+            <p>{`${
+              params.screenWidth < 1280
+                ? convertNumbers(currentSupply)
+                : parseFloat(currentSupply.toFixed(2)).toLocaleString()
+            }`}</p>
+            <p>{`${params.instrument.symbol.toUpperCase()}`}</p>
+          </div>
           <div className="h-[0.4rem] rounded  w-full bg-[#EFF2F5]  ">
             <div
               className={`bg-[#CFD6E4]  h-full rounded `}
-              style={{ maxWidth: supplyPercentage }}
+              style={{
+                maxWidth:
+                  currentSupply == 0 || totalSupply == 0
+                    ? "0"
+                    : supplyPercentage,
+              }}
             ></div>
           </div>
         </div>

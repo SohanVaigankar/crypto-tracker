@@ -36,7 +36,7 @@ const Modal = ({}) => {
     <div
       className={`${
         modal && "modal-backdrop"
-      } w-full h-[100vh] bg-[#0000005a]  fixed top-0 left-0 flex justify-center items-center z-10 p-5 font-[600] `}
+      } w-full h-[100vh] bg-[rgba(0,0,0,0.5)]  fixed top-0 left-0 flex justify-center items-center z-10 p-5 font-[600] `}
       onClick={handleBackdropClick}
     >
       <div className="modal-info sticky top-0 w-full px-5 pt-5 pb-10 bg-[#FFFFFF] border-[#DBDCDF] rounded-[8px]  text-[#0F1629]  z-20 flex flex-col gap-4 text-[0.85rem]">

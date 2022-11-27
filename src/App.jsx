@@ -13,14 +13,14 @@ import { CryptoContext } from "./context/CryptoContext";
 
 const App = () => {
   // context
-  const { modal } = useContext(CryptoContext);
+  const { modal, isLoading } = useContext(CryptoContext);
   return (
     <>
       <div className="app z-0">
         <Navbar />
         <Carousel />
         <Header />
-        <Table />
+        <Table/>
         {modal && <Modal />}
       </div>
     </>
