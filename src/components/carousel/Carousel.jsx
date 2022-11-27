@@ -31,7 +31,7 @@ const Carousel = () => {
             (data, index) =>
               index < carouselLimit && (
                 <div
-                  className={`carousel-element flex justify-center  items-center gap-10 md:gap-4 bg-tertary-bg rounded-[12px] h-[8rem]  px-5 py-3 cursor-pointer ${
+                  className={`carousel-element flex justify-center  xl:justify-start items-center gap-10 md:gap-4 bg-tertary-bg rounded-[12px] h-[8rem]  px-5 py-3 cursor-pointer ${
                     carouselLimit >= 3
                       ? "w-[33%]"
                       : carouselLimit === 2
