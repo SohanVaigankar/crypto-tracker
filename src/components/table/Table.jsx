@@ -7,15 +7,14 @@ import useResolution from "../../hooks/useResolution";
 import Loader from "../loader/Loader";
 
 // context
-import { LOAD_DATA, OPEN_MODAL } from "../../context/action.types";
+import { OPEN_MODAL } from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
 // custom hook
 
 const Table = () => {
   // context
-  const { dispatch, cryptoData, itemsPerPage, currentPage, isLoading } =
-    useContext(CryptoContext);
+  const { dispatch, cryptoData, itemsPerPage, currentPage, isLoading, favouriteList } = useContext(CryptoContext);
 
   // pagination
   // indices of page item of the current page
@@ -25,6 +24,7 @@ const Table = () => {
   const [currentPageItems, setCurrentPageItems] = useState(
     cryptoData.slice(indexOfFirstItem, indexOfLastItem)
   );
+
 
   useEffect(() => {
     setCurrentPageItems(cryptoData.slice(indexOfFirstItem, indexOfLastItem));
@@ -66,7 +66,7 @@ const Table = () => {
               key={index}
             >
               {tableColumns.map((col, tableIndex) =>
-                col.renderCell({ instrument, index, screenWidth, tableIndex })
+                col.renderCell({ instrument, index, screenWidth, tableIndex, dispatch, favouriteList })
               )}
             </div>
           ))}

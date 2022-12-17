@@ -1,19 +1,53 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
+// icons
 import starIcon from "../../assets/icons/star_icon.svg";
+import downArrowIcon from "../../assets/icons/down_arrow.svg";
+import upArrowIcon from "../../assets/icons/up_arrow.svg";
+
 // context
-import { SET_ITEMS_PER_PAGE } from "../../context/action.types";
+import {
+  SET_ITEMS_PER_PAGE,
+  SET_INSTRUMENT_TYPE,
+} from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
 const Header = () => {
   // context
-  const { dispatch } = useContext(CryptoContext);
+  const { itemsPerPage, instrumentType, dispatch } = useContext(CryptoContext);
 
-  const handleOnClick = async (e) => {
+  // state to keep track of open and close state of show rows
+  const [rowsToggle, setRowsToggle] = useState(false);
+
+  // fn to toggle select menu of items per page
+  const handleRowsToggle = (e) => {
     e.preventDefault();
-    await dispatch({
-      type: SET_ITEMS_PER_PAGE,
-      payload: { itemsPerPage: parseInt(e.target.value) },
-    });
+    e.stopPropagation();
+    setRowsToggle(!rowsToggle);
+  };
+
+  // fn to set items per page
+  const handleSetRows = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setRowsToggle(!rowsToggle);
+    if (parseInt(e.target.attributes["value"].value) !== itemsPerPage) {
+      await dispatch({
+        type: SET_ITEMS_PER_PAGE,
+        payload: { itemsPerPage: parseInt(e.target.attributes["value"].value) },
+      });
+    }
+  };
+
+  // fn to handle instrument change
+  const handleInstrumentChange = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(e.target.attributes["value"].value);
+    if (e.target.attributes["value"].value !== instrumentType)
+      await dispatch({
+        type: SET_INSTRUMENT_TYPE,
+        payload: { instrumentType: e.target.attributes["value"].value },
+      });
   };
 
   return (
@@ -23,31 +57,74 @@ const Header = () => {
           Top 100 Cryptocurrencies by Market Cap
         </div>
         <div className="hidden md:flex utility text-[0.8rem] items-center justify-between w-[95%] md:w-[90%] lg:w-[85%] mx-auto">
-          <ul className="instruments flex gap-5 ">
-            <li className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] flex justify-center items-center gap-1">
-              <img src={starIcon} alt="favourite" />
-              <span>Favourites</span>
+          <ul
+            onClick={handleInstrumentChange}
+            value={instrumentType}
+            className="instruments flex gap-5 "
+          >
+            <li
+              value="favourites"
+              className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] flex justify-center items-center gap-1 hover:bg-[#0000000f]"
+            >
+              <img value="favourites" src={starIcon} alt="favourite" />
+              <span value="favourites">Favourites</span>
             </li>
-            <li className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] text-[#3861FB]">
+            <li
+              value="cryptocurrencies"
+              className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] text-[#3861FB] hover:bg-[#0000000f]"
+            >
               CryptoCurrencies
             </li>
-            <li className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px]">
+            <li
+              value="defi"
+              className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] hover:bg-[#0000000f]"
+            >
               DeFi
             </li>
-            <li className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px]">
+            <li
+              value="nft"
+              className="bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] hover:bg-[#0000000f]"
+            >
               NFTs & Collectibles
             </li>
           </ul>
           <div className="table-size flex gap-2 items-center relative top-2">
             <span className="text-[#5b667c] text-[0.8rem]">show rows</span>
-            <select
-              className="bg-utility-bg cursor-pointer py-[0.5rem] px-1 rounded-[8px] text-center font-[600]"
-              onClick={handleOnClick}
+            <div
+              onClick={handleRowsToggle}
+              className="bg-utility-bg cursor-pointer px-3 py-2  rounded-[8px] text-center font-[600] flex items-center justify-between gap-3 relative transition-transform"
             >
-              <option value={10} style={{width:"5rem"}}>10</option>
-              <option value={20} style={{width:"5rem"}}>20</option>
-              <option value={25} style={{width:"5rem"}}>25</option>
-            </select>
+              <span>{itemsPerPage}</span>
+              <img
+                src={rowsToggle ? upArrowIcon : downArrowIcon}
+                className="h-3 w-3"
+              />
+              {rowsToggle && (
+                <ul
+                  onClick={handleSetRows}
+                  className="absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all"
+                >
+                  <li
+                    value={10}
+                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
+                  >
+                    10
+                  </li>
+                  <li
+                    value={20}
+                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
+                  >
+                    20
+                  </li>
+                  <li
+                    value={25}
+                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
+                  >
+                    25
+                  </li>
+                </ul>
+              )}
+            </div>
           </div>
         </div>
       </div>

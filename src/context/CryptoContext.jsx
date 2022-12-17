@@ -7,6 +7,8 @@ const initialState = {
   currentPage: 1,
   modal: null,
   isLoading: false,
+  favouriteList: [],
+  instrumentType: "cryptocurrencies",
 };
 
 // creating crypto context
@@ -15,6 +17,8 @@ export const CryptoContext = createContext(initialState);
 // crypto context provider
 export const CryptoContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CryptoReducer, initialState);
+
+  console.log(state.favouriteList);
 
   // fetching  crypto data
   useEffect(() => {
@@ -42,6 +46,8 @@ export const CryptoContextProvider = ({ children }) => {
     currentPage: parseInt(state.currentPage),
     modal: state.modal,
     isLoading: state.isLoading,
+    favouriteList: state.favouriteList,
+    instrumentType: state.instrumentType,
     dispatch,
   };
   return (

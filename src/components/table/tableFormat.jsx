@@ -1,9 +1,12 @@
 // icons
 import rowMenuIcon from "../../assets/icons/table_row_menu_icon.svg";
 import starIcon from "../../assets/icons/star_icon.svg";
+import starFullIcon from "../../assets/icons/star_full.svg";
 import gapUpIcon from "../../assets/icons/gap_up_icon.svg";
 import gapDownIcon from "../../assets/icons/gap_down_icon.svg";
 // import descendingArrowIcon from "../../assets/icons/descending_arrow.svg"
+
+import { FAVOURITE_TOGGLE } from "../../context/action.types";
 
 // fn to convert numbers to millions, billions, etc
 function convertNumbers(num) {
@@ -43,10 +46,20 @@ export const tableColumns = [
     renderCell: (params) => {
       return (
         <img
-          src={starIcon}
+          src={
+            params.favouriteList.includes(params.instrument)
+              ? starFullIcon
+              : starIcon
+          }
           className={`fav-icon font-[400] h-[1rem] text-[1rem] text-center ${listOfClasses[0]}`}
           alt={"favourite"}
           key={params.tableIndex}
+          onClick={() =>
+            params.dispatch({
+              type: FAVOURITE_TOGGLE,
+              payload: { favourite: params.instrument },
+            })
+          }
         />
       );
     },

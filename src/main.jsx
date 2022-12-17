@@ -5,9 +5,7 @@ import "./index.css";
 import { CryptoContextProvider } from "./context/CryptoContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <CryptoContextProvider>
-      <App />
-    </CryptoContextProvider>
-  </React.StrictMode>
+  <CryptoContextProvider>
+    <App />
+  </CryptoContextProvider>
 );
