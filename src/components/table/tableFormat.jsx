@@ -54,12 +54,13 @@ export const tableColumns = [
           className={`fav-icon font-[400] h-[1rem] text-[1rem] text-center ${listOfClasses[0]}`}
           alt={"favourite"}
           key={params.tableIndex}
-          onClick={() =>
+          onClick={(e) => {
+            e.stopPropagation();
             params.dispatch({
               type: FAVOURITE_TOGGLE,
               payload: { favourite: params.instrument },
-            })
-          }
+            });
+          }}
         />
       );
     },
