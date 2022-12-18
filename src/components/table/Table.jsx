@@ -58,7 +58,7 @@ const Table = () => {
   };
 
   return (
-    <div className="w-[95%] md:w-[90%] lg:w-[85%] mx-auto  ">
+    <div className="w-[99%] sm:w-[95%] md:w-[90%] lg:w-[85%] mx-auto  ">
       <div className="border-t-[1px] border-b-[1px] border-solid border-utility-bg flex justify-between items-center px-5 py-3 gap-1">
         {tableColumns.map((col, index) => (
           <div
@@ -71,7 +71,7 @@ const Table = () => {
       </div>
 
       {isLoading && <Loader />}
-      {!isLoading && currentPageItems != [] && (
+      {!isLoading && data.length > 0 ? (
         <>
           {currentPageItems.map((instrument, index) => (
             <div
@@ -100,6 +100,8 @@ const Table = () => {
             setCurrentPageItems={setCurrentPageItems}
           />
         </>
+      ) : (
+        <h1 className="text-center py-20">{`${instrumentType} list is empty :(`}</h1>
       )}
     </div>
   );

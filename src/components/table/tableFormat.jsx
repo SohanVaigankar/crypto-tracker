@@ -29,7 +29,7 @@ function convertNumbers(num) {
 }
 
 const listOfClasses = [
-  "w-[3.5%] sm:w-[5%]  md:w-[2%]",
+  "w-[4.5%] sm:w-[5%]  md:w-[2%]",
   "hidden md:flex md:w-[1%] -ml-3 lg:ml-0 lg:w-[1.5%] text-center ",
   "-ml-1 sm:ml-0 w-[40%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%]",
   "w-[25%] sm:w-[20%] md:w-[16%] md:w-[12%] xl:w-[6%] text-end",
@@ -38,7 +38,7 @@ const listOfClasses = [
   " hidden sm:flex sm:w-[15%] md:w-[10%] xl:w-[15%] text-end justify-end",
   " hidden md:flex md:w-[10%] xl:w-[13%] text-end justify-end",
   " hidden xl:flex xl:w-[13%] text-end justify-end",
-  "hidden sm:flex sm:w-[5%] md:w-[3%]",
+  "flex w-[3%] md:w-[3%]",
 ];
 
 export const tableColumns = [

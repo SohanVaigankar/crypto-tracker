@@ -20,3 +20,12 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 0.4rem;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: lightskyblue;
+}
+

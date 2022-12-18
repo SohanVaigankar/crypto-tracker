@@ -24,6 +24,8 @@ const Header = () => {
       ? "Top 100 Cryptocurrencies by Market Cap"
       : "My Favourites";
 
+  const dropdownValues = [10, 20, 25];
+
   // fn to toggle select menu of items per page
   const handleRowsToggle = (e) => {
     e.preventDefault();
@@ -114,24 +116,14 @@ const Header = () => {
                 onClick={handleSetRows}
                 className="absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all z-40"
               >
-                <li
-                  value={10}
-                  className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                >
-                  10
-                </li>
-                <li
-                  value={20}
-                  className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                >
-                  20
-                </li>
-                <li
-                  value={25}
-                  className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                >
-                  25
-                </li>
+                {dropdownValues.map((value) => (
+                  <li
+                    value={value}
+                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
+                  >
+                    {value}
+                  </li>
+                ))}
               </ul>
             )}
           </div>
