@@ -4,7 +4,6 @@ import { LOAD_DATA, TOGGLE_LOADING } from "./action.types";
 const initialState = {
   cryptoData: [],
   itemsPerPage: 10,
-  currentPage: 1,
   modal: null,
   isLoading: false,
   favouriteList: [],
@@ -17,8 +16,6 @@ export const CryptoContext = createContext(initialState);
 // crypto context provider
 export const CryptoContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CryptoReducer, initialState);
-
-  console.log(state.favouriteList);
 
   // fetching  crypto data
   useEffect(() => {
@@ -43,7 +40,6 @@ export const CryptoContextProvider = ({ children }) => {
   const value = {
     cryptoData: state.cryptoData,
     itemsPerPage: parseInt(state.itemsPerPage),
-    currentPage: parseInt(state.currentPage),
     modal: state.modal,
     isLoading: state.isLoading,
     favouriteList: state.favouriteList,

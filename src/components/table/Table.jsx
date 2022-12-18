@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { tableColumns } from "./tableFormat";
-import "./table.css";
 // components
 import Pagination from "../pagination/Pagination";
 import useResolution from "../../hooks/useResolution";
@@ -14,24 +13,39 @@ import { CryptoContext } from "../../context/CryptoContext";
 
 const Table = () => {
   // context
-  const { dispatch, cryptoData, itemsPerPage, currentPage, isLoading, favouriteList } = useContext(CryptoContext);
+  const {
+    dispatch,
+    cryptoData,
+    itemsPerPage,
+    isLoading,
+    favouriteList,
+    instrumentType,
+  } = useContext(CryptoContext);
 
-  // pagination
-  // indices of page item of the current page
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = parseInt(indexOfLastItem) - parseInt(itemsPerPage);
+  // state to hold table data
+  const [data, setData] = useState([]);
 
-  const [currentPageItems, setCurrentPageItems] = useState(
-    cryptoData.slice(indexOfFirstItem, indexOfLastItem)
-  );
-
-
+  // changing table data according to the instrument type
   useEffect(() => {
-    setCurrentPageItems(cryptoData.slice(indexOfFirstItem, indexOfLastItem));
-  }, [itemsPerPage, currentPage, cryptoData]);
+    instrumentType === "cryptocurrencies"
+      ? setData(cryptoData)
+      : setData(favouriteList);
+  }, [instrumentType, cryptoData, favouriteList]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // state to store data of current page items as per pagination
+  const [currentPageItems, setCurrentPageItems] = useState([]);
+
+  // set current page to default value when instrumentType is changed
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [instrumentType]);
+
+  // getting window size data from hook
   const screenWidth = useResolution();
 
+  // fn to handle clicks on table row for mobile device screens
   const handleModal = (e, instrument) => {
     e.preventDefault();
 
@@ -61,19 +75,29 @@ const Table = () => {
         <>
           {currentPageItems.map((instrument, index) => (
             <div
-              className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer p-4  gap-1"
+              className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer p-4  gap-1 relative"
               onClick={(e) => handleModal(e, instrument)}
               key={index}
             >
               {tableColumns.map((col, tableIndex) =>
-                col.renderCell({ instrument, index, screenWidth, tableIndex, dispatch, favouriteList })
+                col.renderCell({
+                  instrument,
+                  index,
+                  screenWidth,
+                  tableIndex,
+                  favouriteList,
+                  dispatch,
+                })
               )}
             </div>
           ))}
+
           <Pagination
-            indexOfLastItem={indexOfLastItem}
-            indexOfFirstItem={indexOfFirstItem}
-            currentPageItems={currentPageItems}
+            data={data}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setCurrentPageItems={setCurrentPageItems}
           />
         </>
       )}

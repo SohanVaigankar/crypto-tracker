@@ -1,5 +1,5 @@
 // icons
-import rowMenuIcon from "../../assets/icons/table_row_menu_icon.svg";
+
 import starIcon from "../../assets/icons/star_icon.svg";
 import starFullIcon from "../../assets/icons/star_full.svg";
 import gapUpIcon from "../../assets/icons/gap_up_icon.svg";
@@ -7,6 +7,9 @@ import gapDownIcon from "../../assets/icons/gap_down_icon.svg";
 // import descendingArrowIcon from "../../assets/icons/descending_arrow.svg"
 
 import { FAVOURITE_TOGGLE } from "../../context/action.types";
+
+// components
+import Menu from "../menu/Menu";
 
 // fn to convert numbers to millions, billions, etc
 function convertNumbers(num) {
@@ -75,7 +78,7 @@ export const tableColumns = [
           className={`serial-no text-center ${listOfClasses[1]}`}
           key={params.tableIndex}
         >
-          {params.index + 1}
+          { params.index+1}
         </div>
       );
     },
@@ -266,14 +269,7 @@ export const tableColumns = [
     classes: listOfClasses[9],
     headerName: "",
     renderCell: (params) => {
-      return (
-        <img
-          src={rowMenuIcon}
-          className={`fav-icon font-[400] h-[1rem] text-center cursor-pointer ${listOfClasses[9]}`}
-          alt={"menu"}
-          key={params.tableIndex}
-        />
-      );
+      return <Menu classes={listOfClasses[9]} key={params.tableIndex} />;
     },
   },
 ];
