@@ -58,11 +58,11 @@ const Header = () => {
 
   return (
     <div>
-      <div className="middle-section bg-secondary-bg px-5 py-10 md:py-5  flex flex-col gap-10 ">
+      <div className="middle-section bg-secondary-bg px-5 py-10 md:pt-5 pb-5 flex flex-col gap-5 ">
         <div className="table-title text-left text-2xl font-[700] w-[95%] md:w-[90%] lg:w-[85%] mx-auto">
           {title}
         </div>
-        <div className="hidden md:flex utility text-[0.8rem] items-center justify-between w-[95%] md:w-[90%] lg:w-[85%] mx-auto">
+        <div className="flex utility text-[0.8rem] items-center justify-between w-[95%] md:w-[90%] lg:w-[85%] mx-auto">
           <ul
             onClick={handleInstrumentChange}
             value={instrumentType}
@@ -91,49 +91,49 @@ const Header = () => {
               CryptoCurrencies
             </li>
           </ul>
-          <div className="table-size flex gap-2 items-center relative top-2">
-            <span className="text-[#5b667c] text-[0.8rem]">show rows</span>
-            <div
-              onClick={handleRowsToggle}
-              onMouseLeave={(e) => {
-                e.stopPropagation();
-                setTimeout(() => {
-                  setRowsToggle(false);
-                }, 250);
-              }}
-              className="bg-utility-bg cursor-pointer px-3 py-2  rounded-[8px] text-center font-[600] flex items-center justify-between gap-3 relative transition-transform"
-            >
-              <span>{itemsPerPage}</span>
-              <img
-                src={rowsToggle ? upArrowIcon : downArrowIcon}
-                className="h-3 w-3"
-              />
-              {rowsToggle && (
-                <ul
-                  onClick={handleSetRows}
-                  className="absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all z-40"
+        </div>
+        <div className="table-size flex justify-end w-[95%] md:w-[90%] mt-2 sm:-mt-1 md:-mt-4 lg:w-[85%] mx-auto gap-2 items-center   ">
+          <span className="text-[#5b667c] text-[0.8rem]">show rows</span>
+          <div
+            onClick={handleRowsToggle}
+            onMouseLeave={(e) => {
+              e.stopPropagation();
+              setTimeout(() => {
+                setRowsToggle(false);
+              }, 250);
+            }}
+            className="bg-utility-bg cursor-pointer px-3 py-1  rounded-[8px] text-center text-[0.8rem] font-[600] flex items-center justify-between gap-3 relative transition-transform"
+          >
+            <span>{itemsPerPage}</span>
+            <img
+              src={rowsToggle ? upArrowIcon : downArrowIcon}
+              className="h-3 w-3"
+            />
+            {rowsToggle && (
+              <ul
+                onClick={handleSetRows}
+                className="absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all z-40"
+              >
+                <li
+                  value={10}
+                  className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
                 >
-                  <li
-                    value={10}
-                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                  >
-                    10
-                  </li>
-                  <li
-                    value={20}
-                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                  >
-                    20
-                  </li>
-                  <li
-                    value={25}
-                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                  >
-                    25
-                  </li>
-                </ul>
-              )}
-            </div>
+                  10
+                </li>
+                <li
+                  value={20}
+                  className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
+                >
+                  20
+                </li>
+                <li
+                  value={25}
+                  className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
+                >
+                  25
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </div>
