@@ -11,7 +11,11 @@ import { CryptoContext } from "../../context/CryptoContext";
 
 // custom hook
 
-const Table = () => {
+const Table = (
+  {
+    /*data, instrumentType*/
+  }
+) => {
   // context
   const {
     dispatch,
@@ -19,6 +23,7 @@ const Table = () => {
     itemsPerPage,
     isLoading,
     favouriteList,
+    baseCurrency,
     instrumentType,
   } = useContext(CryptoContext);
 
@@ -86,6 +91,7 @@ const Table = () => {
                   screenWidth,
                   tableIndex,
                   favouriteList,
+                  baseCurrency,
                   dispatch,
                 })
               )}

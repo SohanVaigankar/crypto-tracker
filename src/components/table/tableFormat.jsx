@@ -11,6 +11,9 @@ import { FAVOURITE_TOGGLE } from "../../context/action.types";
 // components
 import Menu from "../menu/Menu";
 
+// currency symbols
+import { currencySymbolList, getCurrencySymbol } from "../../data/currencyData";
+
 // fn to convert numbers to millions, billions, etc
 function convertNumbers(num) {
   // Trillions
@@ -78,7 +81,7 @@ export const tableColumns = [
           className={`serial-no text-center ${listOfClasses[1]}`}
           key={params.tableIndex}
         >
-          { params.index+1}
+          {params.index + 1}
         </div>
       );
     },
@@ -117,8 +120,10 @@ export const tableColumns = [
         <div
           key={params.tableIndex}
           className={`price-cell ${listOfClasses[3]}`}
-        >{`₹ ${parseFloat(
-          params.instrument.current_price.toFixed(2)
+        >{`${getCurrencySymbol(params.baseCurrency)} ${parseFloat(
+          currencySymbolList?.baseCurrency?.category === "cryptocurrency"
+            ? params.instrument.current_price.toFixed(2)
+            : params.instrument.current_price.toFixed(10)
         ).toLocaleString()}`}</div>
       );
     },
@@ -138,13 +143,13 @@ export const tableColumns = [
         >
           <img src={percentage >= 0 ? gapUpIcon : gapDownIcon} alt=" " />
           <p
-            className={
+            className={`w-[45%] whitespace-nowrap  ${
               percentage > 0
                 ? "text-gap-up"
                 : percentage == 0
                 ? "text-[#808A9D]"
                 : "text-gap-down"
-            }
+            }`}
           >{`${percentage}%`}</p>
         </div>
       );
@@ -165,13 +170,13 @@ export const tableColumns = [
         >
           <img src={percentage >= 0 ? gapUpIcon : gapDownIcon} alt=" " />
           <p
-            className={
+            className={`w-[45%] whitespace-nowrap  ${
               percentage > 0
                 ? "text-gap-up"
                 : percentage == 0
                 ? "text-[#808A9D]"
                 : "text-gap-down"
-            }
+            }`}
           >{`${percentage}%`}</p>
         </div>
       );
@@ -189,7 +194,7 @@ export const tableColumns = [
           className={`market-cap ${listOfClasses[6]}`}
           key={params.tableIndex}
         >
-          {`₹ ${
+          {`${getCurrencySymbol(params.baseCurrency)} ${
             params.screenWidth < 1280
               ? convertNumbers(mcap)
               : parseFloat(mcap.toFixed(2)).toLocaleString()
@@ -213,7 +218,7 @@ export const tableColumns = [
           className={`volume flex flex-col justify-end items-end ${listOfClasses[7]}`}
           key={params.tableIndex}
         >
-          <div className={``}>{`₹ ${
+          <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
             params.screenWidth < 1280
               ? convertNumbers(volume)
               : parseFloat(volume.toFixed(2)).toLocaleString()

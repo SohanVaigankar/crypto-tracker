@@ -20,7 +20,7 @@ const App = () => {
         <Navbar />
         <Carousel />
         <Header />
-        <Table/>
+        <Table />
         {modal && <Modal />}
       </div>
     </>

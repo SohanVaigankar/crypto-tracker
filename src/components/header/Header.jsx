@@ -2,8 +2,6 @@ import React, { useState, useContext } from "react";
 // icons
 import starIcon from "../../assets/icons/star_icon.svg";
 import starFullIcon from "../../assets/icons/star_full.svg";
-import downArrowIcon from "../../assets/icons/down_arrow.svg";
-import upArrowIcon from "../../assets/icons/up_arrow.svg";
 
 // context
 import {
@@ -12,12 +10,12 @@ import {
 } from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
+// components
+import DropdownMenu from "../dropdown-menu/DropdownMenu";
+
 const Header = () => {
   // context
   const { itemsPerPage, instrumentType, dispatch } = useContext(CryptoContext);
-
-  // state to keep track of open and close state of show rows
-  const [rowsToggle, setRowsToggle] = useState(false);
 
   const title =
     instrumentType === "cryptocurrencies"
@@ -26,22 +24,12 @@ const Header = () => {
 
   const dropdownValues = [10, 20, 25];
 
-  // fn to toggle select menu of items per page
-  const handleRowsToggle = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setRowsToggle(!rowsToggle);
-  };
-
   // fn to set items per page
-  const handleSetRows = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setRowsToggle(!rowsToggle);
-    if (parseInt(e.target.attributes["value"].value) !== itemsPerPage) {
+  const handleSetRows = async (result) => {
+    if (parseInt(result) !== itemsPerPage) {
       await dispatch({
         type: SET_ITEMS_PER_PAGE,
-        payload: { itemsPerPage: parseInt(e.target.attributes["value"].value) },
+        payload: { itemsPerPage: parseInt(result) },
       });
     }
   };
@@ -96,37 +84,14 @@ const Header = () => {
         </div>
         <div className="table-size flex justify-end w-[95%] md:w-[90%] mt-2 sm:-mt-1 md:-mt-4 lg:w-[85%] mx-auto gap-2 items-center   ">
           <span className="text-[#5b667c] text-[0.8rem]">show rows</span>
-          <div
-            onClick={handleRowsToggle}
-            onMouseLeave={(e) => {
-              e.stopPropagation();
-              setTimeout(() => {
-                setRowsToggle(false);
-              }, 250);
-            }}
-            className="bg-utility-bg cursor-pointer px-3 py-1  rounded-[8px] text-center text-[0.8rem] font-[600] flex items-center justify-between gap-3 relative transition-transform"
-          >
-            <span>{itemsPerPage}</span>
-            <img
-              src={rowsToggle ? upArrowIcon : downArrowIcon}
-              className="h-3 w-3"
-            />
-            {rowsToggle && (
-              <ul
-                onClick={handleSetRows}
-                className="absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all z-40"
-              >
-                {dropdownValues.map((value) => (
-                  <li
-                    value={value}
-                    className="border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]"
-                  >
-                    {value}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <DropdownMenu
+            valueList={dropdownValues}
+            handleSetMenuFun={handleSetRows}
+            currentValue={itemsPerPage}
+            menuClasses={`bg-utility-bg cursor-pointer px-3 py-1  rounded-[8px] text-center text-[0.8rem] font-[600] flex items-center justify-between gap-3 relative transition-transform`}
+            menuContainerClasses={`absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all z-40 overflow-hidden`}
+            menuItemClasses={`border-t-[1px] border-[#0000000c] px-3 py-1 hover:bg-[#00000008]`}
+          />
         </div>
       </div>
     </div>

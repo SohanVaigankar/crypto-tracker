@@ -3,6 +3,7 @@ import {
   OPEN_MODAL,
   CLOSE_MODAL,
   SET_ITEMS_PER_PAGE,
+  SET_BASE_CURRENCY,
   TOGGLE_LOADING,
   FAVOURITE_TOGGLE,
   SET_INSTRUMENT_TYPE,
@@ -22,6 +23,8 @@ export const CryptoReducer = (state, action) => {
       return { ...state, modal: null };
     case SET_ITEMS_PER_PAGE:
       return { ...state, itemsPerPage: action.payload.itemsPerPage };
+    case SET_BASE_CURRENCY:
+      return { ...state, baseCurrency: action.payload.baseCurrency };
     case FAVOURITE_TOGGLE:
       return {
         ...state,

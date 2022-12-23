@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+
+// icons
 import closeBtnIcon from "../../assets/icons/close_btn.svg";
 import gapDownIcon from "../../assets/icons/gap_down_icon.svg";
 import gapUpIcon from "../../assets/icons/gap_up_icon.svg";
@@ -7,11 +9,15 @@ import gapUpIcon from "../../assets/icons/gap_up_icon.svg";
 import { CLOSE_MODAL } from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
+// hooks
 import useResolution from "../../hooks/useResolution";
+
+// data
+import { getCurrencySymbol } from "../../data/currencyData";
 
 const Modal = ({}) => {
   // context
-  const { modal, dispatch } = useContext(CryptoContext);
+  const { modal, baseCurrency, dispatch } = useContext(CryptoContext);
 
   const screenWidth = useResolution();
 
@@ -57,7 +63,9 @@ const Modal = ({}) => {
         <div className="flex justify-between items-center">
           <div className="flex flex-col items-start">
             <p className="text-[#0F1629]">PRICE</p>
-            <p className="text-[#0F1629]">{`₹ ${modal.current_price.toLocaleString()}`}</p>
+            <p className="text-[#0F1629]">{`${getCurrencySymbol(
+              baseCurrency
+            )} ${modal.current_price.toLocaleString()}`}</p>
           </div>
           <div className="flex flex-col items-start">
             <p className="text-[#0F1629]">24H</p>
@@ -93,13 +101,17 @@ const Modal = ({}) => {
         {/*mcap */}
         <div className="flex justify-start items-start flex-col">
           <p>MARKET CAP</p>
-          <p>{`₹ ${modal.market_cap.toLocaleString()}`}</p>
+          <p>{`${getCurrencySymbol(
+            baseCurrency
+          )} ${modal.market_cap.toLocaleString()}`}</p>
         </div>
         {/*volume */}
         <div className="flex justify-start items-start flex-col">
           <p>VOLUME (24H)</p>
           <div className="flex items-center justify-start gap-2">
-            <p>{`₹ ${modal.total_volume.toLocaleString()}`}</p>
+            <p>{`${getCurrencySymbol(
+              baseCurrency
+            )} ${modal.total_volume.toLocaleString()}`}</p>
             <div className="flex text-[#808A9D] text-[0.7rem] items-end gap-1">
               <p>{` ${(modal.total_volume / modal.current_price)
                 .toFixed(2)
