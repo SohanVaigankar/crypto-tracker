@@ -34,7 +34,7 @@ const CryptoCurrencies = () => {
   }, [instrumentType, cryptoData, favouriteList, showFavourites]);
 
   const title =
-    instrumentType === "cryptocurrencies"
+  showFavourites === false
       ? "Top 100 Cryptocurrencies by Market Cap"
       : "My Favourites";
       

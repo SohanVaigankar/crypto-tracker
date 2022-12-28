@@ -37,8 +37,8 @@ const CryptoExchanges = () => {
   }, [instrumentType, exchangeData, favouriteList, showFavourites]);
 
   const title =
-    instrumentType === "cryptocurrencies"
-      ? "Top Crypto Exchanges by Market Cap"
+    showFavourites === false
+      ? "Top Crypto Exchanges by Trust Score Rank"
       : "My Favourites";
 
   return (
