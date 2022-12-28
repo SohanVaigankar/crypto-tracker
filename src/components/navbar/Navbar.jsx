@@ -78,7 +78,7 @@ const Navbar = () => {
               setMenuToggle(false);
             }, 250);
           }}
-          className="absolute flex flex-col justify-center items-center gap-10 mx-auto w-[90%] sm:w-[50%] h-[40vh] md:h-[25vh] top-[100%] sm:right-5 rounded-lg  bg-[#000000af] text-[#fafafa] py-5 px-5 z-50"
+          className="absolute flex flex-col justify-center items-center gap-10 mx-auto w-[90%] md:w-[50%] h-[40vh] md:h-[25vh] top-[100%] sm:right-5 rounded-lg  bg-[#000000af] text-[#fafafa] py-5 px-5 z-50"
         >
           <Link
             to="/cryptocurrencies"

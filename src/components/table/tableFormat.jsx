@@ -35,7 +35,7 @@ function convertNumbers(num) {
 const listOfClasses = [
   "w-[4.5%] sm:w-[5%]  md:w-[2%]",
   " w-[1%] md:flex md:w-[1%] -ml-3 lg:ml-0 lg:w-[1.5%] text-center ",
-  "-ml-1 sm:ml-0 w-[40%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%]",
+  "ml-1 sm:ml-0 w-[40%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%] ",
   "w-[25%] sm:w-[20%] md:w-[16%] md:w-[12%] xl:w-[6%] text-end",
   "mr-4 w-[15%] sm:w-[12%] sm:mr-0 md:w-[8%] xl:w-[7%] text-end",
   "hidden lg:flex lg:w-[8%] xl:w-[7%] text-end justify-end",
@@ -99,7 +99,7 @@ export const currencyColumns = [
           key={params.tableIndex}
         >
           <img
-            className="cell-img h-[1.5rem]"
+            className="cell-img h-[1.5rem] w-[1.5rem]"
             src={params.instrument?.image}
             alt="avatar"
           />
@@ -317,7 +317,7 @@ export const exchangesColumns = [
     renderCell: (params) => {
       return (
         <div
-          className={`serial-no text-center ${listOfClasses[1]}`}
+          className={`serial-no text-right ${listOfClasses[1]} w-[4%]`}
           key={"trustScoreRank" + params.instrument?.trust_score_rank}
         >
           {params.instrument?.trust_score_rank}
@@ -336,7 +336,7 @@ export const exchangesColumns = [
           key={"name" + params.tableIndex}
         >
           <img
-            className="cell-img h-[1.5rem]"
+            className="cell-img h-[1.5rem] w-[1.5rem]"
             src={params.instrument?.image}
             alt="avatar"
           />

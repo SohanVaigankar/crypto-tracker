@@ -50,7 +50,11 @@ const Table = ({
   };
 
   return (
-    <div className="w-[99%] sm:w-[95%] md:w-[90%] lg:w-[85%] mx-auto  ">
+    <div
+      className={`w-[99%] sm:w-[95%] md:w-[90%]  mx-auto lg:w-[85%] ${
+        instrumentType === "cryptoexchanges" ? "xl:w-[75%] 2xl:w-[65%]" : ""
+      } `}
+    >
       <div className="border-t-[1px] border-b-[1px] border-solid border-utility-bg flex justify-between items-center px-5 py-3 gap-1">
         {tableColumns.map((col, index) => (
           <div
