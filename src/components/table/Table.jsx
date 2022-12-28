@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { tableColumns } from "./tableFormat";
 // components
 import Pagination from "../pagination/Pagination";
 import useResolution from "../../hooks/useResolution";
@@ -11,31 +10,18 @@ import { CryptoContext } from "../../context/CryptoContext";
 
 // custom hook
 
-const Table = (
-  {
-    /*data, instrumentType*/
-  }
-) => {
+const Table = ({
+  data,
+  favouriteList,
+  instrumentType,
+  showFavourites,
+  tableColumns,
+}) => {
   // context
-  const {
-    dispatch,
-    cryptoData,
-    itemsPerPage,
-    isLoading,
-    favouriteList,
-    baseCurrency,
-    instrumentType,
-  } = useContext(CryptoContext);
+  const { dispatch, itemsPerPage, isLoading, baseCurrency, btcExchangeRates } =
+    useContext(CryptoContext);
 
-  // state to hold table data
-  const [data, setData] = useState([]);
-
-  // changing table data according to the instrument type
-  useEffect(() => {
-    instrumentType === "cryptocurrencies"
-      ? setData(cryptoData)
-      : setData(favouriteList);
-  }, [instrumentType, cryptoData, favouriteList]);
+  // state to keep change colums as per instrument type
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -45,7 +31,7 @@ const Table = (
   // set current page to default value when instrumentType is changed
   useEffect(() => {
     setCurrentPage(1);
-  }, [instrumentType]);
+  }, [showFavourites]);
 
   // getting window size data from hook
   const screenWidth = useResolution();
@@ -53,12 +39,13 @@ const Table = (
   // fn to handle clicks on table row for mobile device screens
   const handleModal = (e, instrument) => {
     e.preventDefault();
-
-    if (screenWidth < 640) {
-      dispatch({
-        type: OPEN_MODAL,
-        payload: { modal: instrument },
-      });
+    if (instrumentType === "cryptocurrencies") {
+      if (screenWidth < 640) {
+        dispatch({
+          type: OPEN_MODAL,
+          payload: { modal: instrument },
+        });
+      }
     }
   };
 
@@ -80,9 +67,9 @@ const Table = (
         <>
           {currentPageItems.map((instrument, index) => (
             <div
-              className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer p-4  gap-1 relative"
+              className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer p-4  gap-1 relative hover:bg-[#0000000a]"
               onClick={(e) => handleModal(e, instrument)}
-              key={index}
+              key={instrument.id}
             >
               {tableColumns.map((col, tableIndex) =>
                 col.renderCell({
@@ -92,6 +79,7 @@ const Table = (
                   tableIndex,
                   favouriteList,
                   baseCurrency,
+                  btcExchangeRates,
                   dispatch,
                 })
               )}
@@ -107,7 +95,9 @@ const Table = (
           />
         </>
       ) : (
-        <h1 className="text-center py-20">{`${instrumentType} list is empty :(`}</h1>
+        <h1 className="text-center py-20">{`${
+          showFavourites ? "favourites" : instrumentType
+        } list is empty :(`}</h1>
       )}
     </div>
   );

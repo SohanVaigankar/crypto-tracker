@@ -13,6 +13,7 @@ import Menu from "../menu/Menu";
 
 // currency symbols
 import { currencySymbolList, getCurrencySymbol } from "../../data/currencyData";
+import { convertBtcToCurrency } from "../../services/getData";
 
 // fn to convert numbers to millions, billions, etc
 function convertNumbers(num) {
@@ -33,18 +34,18 @@ function convertNumbers(num) {
 
 const listOfClasses = [
   "w-[4.5%] sm:w-[5%]  md:w-[2%]",
-  "hidden md:flex md:w-[1%] -ml-3 lg:ml-0 lg:w-[1.5%] text-center ",
+  " w-[1%] md:flex md:w-[1%] -ml-3 lg:ml-0 lg:w-[1.5%] text-center ",
   "-ml-1 sm:ml-0 w-[40%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%]",
   "w-[25%] sm:w-[20%] md:w-[16%] md:w-[12%] xl:w-[6%] text-end",
-  "w-[15%] sm:w-[12%] md:w-[8%] xl:w-[7%] text-end",
+  "mr-4 w-[15%] sm:w-[12%] sm:mr-0 md:w-[8%] xl:w-[7%] text-end",
   "hidden lg:flex lg:w-[8%] xl:w-[7%] text-end justify-end",
-  " hidden sm:flex sm:w-[15%] md:w-[10%] xl:w-[15%] text-end justify-end",
-  " hidden md:flex md:w-[10%] xl:w-[13%] text-end justify-end",
+  " sm:flex sm:w-[15%] md:w-[10%] xl:w-[15%] text-end justify-end",
+  "  md:flex md:w-[10%] xl:w-[13%] text-end justify-end",
   " hidden xl:flex xl:w-[13%] text-end justify-end",
   "flex w-[3%] md:w-[3%]",
 ];
 
-export const tableColumns = [
+export const currencyColumns = [
   {
     field: "favourite",
     classes: listOfClasses[0],
@@ -73,12 +74,12 @@ export const tableColumns = [
   },
   {
     field: "serial-number",
-    classes: listOfClasses[1],
+    classes: `hidden ${listOfClasses[1]}`,
     headerName: "#",
     renderCell: (params) => {
       return (
         <div
-          className={`serial-no text-center ${listOfClasses[1]}`}
+          className={`serial-no text-center hidden ${listOfClasses[1]}`}
           key={params.tableIndex}
         >
           {params.index + 1}
@@ -184,14 +185,14 @@ export const tableColumns = [
   },
   {
     field: "mcap",
-    classes: listOfClasses[6],
+    classes: `hidden ${listOfClasses[6]}`,
     headerName: "MARKET CAP",
     renderCell: (params) => {
       let mcap = params.instrument.market_cap;
 
       return (
         <div
-          className={`market-cap ${listOfClasses[6]}`}
+          className={`market-cap hidden ${listOfClasses[6]}`}
           key={params.tableIndex}
         >
           {`${getCurrencySymbol(params.baseCurrency)} ${
@@ -205,7 +206,7 @@ export const tableColumns = [
   },
   {
     field: "volume",
-    classes: listOfClasses[7],
+    classes: `hidden ${listOfClasses[7]}`,
     headerName: "VOLUME(24H)",
     renderCell: (params) => {
       let volume = params.instrument.total_volume;
@@ -215,7 +216,7 @@ export const tableColumns = [
       );
       return (
         <div
-          className={`volume flex flex-col justify-end items-end ${listOfClasses[7]}`}
+          className={`volume flex flex-col justify-end items-end hidden ${listOfClasses[7]}`}
           key={params.tableIndex}
         >
           <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
@@ -275,6 +276,150 @@ export const tableColumns = [
     headerName: "",
     renderCell: (params) => {
       return <Menu classes={listOfClasses[9]} key={params.tableIndex} />;
+    },
+  },
+];
+
+// column format and data for crypto exchanges
+
+export const exchangesColumns = [
+  {
+    field: "favourite",
+    classes: listOfClasses[0],
+    headerName: "",
+    renderCell: (params) => {
+      return (
+        <img
+          src={
+            params.favouriteList.includes(params.instrument)
+              ? starFullIcon
+              : starIcon
+          }
+          className={`fav-icon font-[400] h-[1rem] text-[1rem] text-center ${listOfClasses[0]}`}
+          alt={"favourite"}
+          key={"favourite" + params.tableIndex}
+          onClick={(e) => {
+            e.stopPropagation();
+            params.dispatch({
+              type: FAVOURITE_TOGGLE,
+              payload: { favourite: params.instrument },
+              // .instrument[instrumentType]
+            });
+          }}
+        />
+      );
+    },
+  },
+  {
+    field: "trust-score-rank",
+    classes: listOfClasses[1],
+    headerName: "#",
+    renderCell: (params) => {
+      return (
+        <div
+          className={`serial-no text-center ${listOfClasses[1]}`}
+          key={"trustScoreRank" + params.instrument?.trust_score_rank}
+        >
+          {params.instrument?.trust_score_rank}
+        </div>
+      );
+    },
+  },
+  {
+    field: "name",
+    classes: listOfClasses[2],
+    headerName: "NAME",
+    renderCell: (params) => {
+      return (
+        <div
+          className={`image-cell flex justify-start items-center gap-[0.3rem] sm:gap-2 text-start ${listOfClasses[2]}`}
+          key={"name" + params.tableIndex}
+        >
+          <img
+            className="cell-img h-[1.5rem]"
+            src={params.instrument?.image}
+            alt="avatar"
+          />
+          <div>{params.instrument.name}</div>
+        </div>
+      );
+    },
+  },
+  {
+    field: "trust-score",
+    classes: `hidden ${listOfClasses[6]}`,
+    headerName: "TRUST SCORE",
+    renderCell: (params) => {
+      return (
+        <div
+          className={`hidden ${listOfClasses[6]}`}
+          key={"trustScore" + params.tableIndex}
+        >
+          {`${params.instrument.trust_score}`}
+        </div>
+      );
+    },
+  },
+  {
+    field: "volume",
+    classes: listOfClasses[7],
+    headerName: "VOLUME(24H)",
+    renderCell: (params) => {
+      console.log(
+        params?.btcExchangeRates[params.baseCurrency.toLowerCase()]?.value
+      );
+      let volume = convertBtcToCurrency(
+        params.instrument.trade_volume_24h_btc,
+        params?.btcExchangeRates[params.baseCurrency.toLowerCase()].value
+      );
+      return (
+        <div
+          className={`volume flex flex-col justify-end items-end ${listOfClasses[7]}`}
+          key={"volume" + params.tableIndex}
+        >
+          <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
+            params.screenWidth < 1280
+              ? convertNumbers(volume)
+              : parseFloat(volume.toFixed(2)).toLocaleString()
+          }`}</div>
+        </div>
+      );
+    },
+  },
+  {
+    field: "normalized-volume",
+    classes: `hidden ${listOfClasses[7]}`,
+    headerName: "NORMALIZED VOLUME(24H)",
+    renderCell: (params) => {
+      let volume = convertBtcToCurrency(
+        params.instrument.trade_volume_24h_btc_normalized,
+        params?.btcExchangeRates[params.baseCurrency.toLowerCase()].value
+      );
+      return (
+        <div
+          className={`volume flex flex-col justify-end items-end hidden ${listOfClasses[7]}`}
+          key={"normalizedVolume" + params.tableIndex}
+        >
+          <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
+            params.screenWidth < 1280
+              ? convertNumbers(volume)
+              : parseFloat(volume.toFixed(2)).toLocaleString()
+          }`}</div>
+        </div>
+      );
+    },
+  },
+  {
+    field: "menu",
+    classes: listOfClasses[9],
+    headerName: "",
+    renderCell: (params) => {
+      return (
+        <Menu
+          classes={listOfClasses[9]}
+          key={"menu" + params.instrument.trust_score_rank}
+        />
+      );
     },
   },
 ];

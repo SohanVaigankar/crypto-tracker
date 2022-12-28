@@ -7,20 +7,17 @@ import starFullIcon from "../../assets/icons/star_full.svg";
 import {
   SET_ITEMS_PER_PAGE,
   SET_INSTRUMENT_TYPE,
+  SHOW_FAVOURITE_TOGGLE,
 } from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
 // components
 import DropdownMenu from "../dropdown-menu/DropdownMenu";
 
-const Header = () => {
+const Header = ({ title }) => {
   // context
-  const { itemsPerPage, instrumentType, dispatch } = useContext(CryptoContext);
-
-  const title =
-    instrumentType === "cryptocurrencies"
-      ? "Top 100 Cryptocurrencies by Market Cap"
-      : "My Favourites";
+  const { itemsPerPage, showFavourites, instrumentType, dispatch } =
+    useContext(CryptoContext);
 
   const dropdownValues = [10, 20, 25];
 
@@ -35,15 +32,19 @@ const Header = () => {
   };
 
   // fn to handle instrument change
-  const handleInstrumentChange = async (e) => {
+  const handleShowFavouriteToggle = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(e.target.attributes["value"].value);
-    if (e.target.attributes["value"].value !== instrumentType)
+    if (e.target.attributes["value"].value !== String(showFavourites)) {
+      // console.log(e.target.attributes["value"].value);
       await dispatch({
-        type: SET_INSTRUMENT_TYPE,
-        payload: { instrumentType: e.target.attributes["value"].value },
+        type: SHOW_FAVOURITE_TOGGLE,
+        payload: {
+          showFavourites:
+            e.target.attributes["value"].value === "true" ? true : false,
+        },
       });
+    }
   };
 
   return (
@@ -54,31 +55,31 @@ const Header = () => {
         </div>
         <div className="flex utility text-[0.8rem] items-center justify-between w-[95%] md:w-[90%] lg:w-[85%] mx-auto">
           <ul
-            onClick={handleInstrumentChange}
-            value={instrumentType}
+            onClick={handleShowFavouriteToggle}
+            value={showFavourites}
             className="instruments flex gap-5 "
           >
             <li
               value="favourites"
               className={`bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px] flex justify-center items-center gap-1 hover:bg-[#0000000f] ${
-                instrumentType === "favourites" && "text-[#3861FB]"
+                showFavourites === true && "text-[#3861FB]"
               }`}
             >
               <img
-                value="favourites"
-                src={instrumentType === "favourites" ? starFullIcon : starIcon}
+                value={true}
+                src={showFavourites === true ? starFullIcon : starIcon}
                 className="h-5"
                 alt="favourite"
               />
-              <span value="favourites">Favourites</span>
+              <span value={true}>Favourites</span>
             </li>
             <li
-              value="cryptocurrencies"
+              value={false}
               className={`bg-utility-bg cursor-pointer py-[0.4rem] px-2 rounded-[8px]  hover:bg-[#0000000f] ${
-                instrumentType === "cryptocurrencies" && "text-[#3861FB]"
+                showFavourites === false && "text-[#3861FB]"
               }`}
             >
-              CryptoCurrencies
+              {instrumentType === "cryptocurrencies" ? "Crypto Currencies" : "Crypto Exchanges"}
             </li>
           </ul>
         </div>

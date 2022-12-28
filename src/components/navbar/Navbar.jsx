@@ -1,12 +1,16 @@
-import React, { useState,  useContext } from "react";
-
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 // icons
 import logoIcon from "../../assets/icons/logo.svg";
 import searchIcon from "../../assets/icons/search_icon.svg";
 import menuIcon from "../../assets/icons/hamburger_icon.svg";
+import closeIcon from "../../assets/icons/close_icon.svg";
 
 // context
-import { SET_BASE_CURRENCY } from "../../context/action.types";
+import {
+  SET_BASE_CURRENCY,
+  SET_INSTRUMENT_TYPE,
+} from "../../context/action.types";
 import { CryptoContext } from "../../context/CryptoContext";
 
 // components
@@ -14,7 +18,8 @@ import DropdownMenu from "../dropdown-menu/DropdownMenu";
 
 const Navbar = () => {
   // context
-  const { baseCurrency,baseCurrencyList, dispatch } = useContext(CryptoContext);
+  const { baseCurrency, baseCurrencyList, dispatch } =
+    useContext(CryptoContext);
 
   // state to toggle navbar menu
   const [menuToggle, setMenuToggle] = useState(false);
@@ -54,9 +59,9 @@ const Navbar = () => {
               setMenuToggle(false);
             }, 250);
           }}
-          src={menuIcon}
+          src={menuToggle ? closeIcon : menuIcon}
           alt="menu"
-          className="cursor-pointer"
+          className="cursor-pointer w-5 h-5"
         />
       </div>
       {menuToggle && (
@@ -73,21 +78,41 @@ const Navbar = () => {
               setMenuToggle(false);
             }, 250);
           }}
-          className="absolute mx-auto w-[90%] sm:w-[50%] h-[25vh] top-[100%] sm:right-5 rounded-lg  bg-[#d8d7d7] py-5 px-5 z-50"
+          className="absolute flex flex-col justify-center items-center gap-10 mx-auto w-[90%] sm:w-[50%] h-[40vh] md:h-[25vh] top-[100%] sm:right-5 rounded-lg  bg-[#000000af] text-[#fafafa] py-5 px-5 z-50"
         >
-          <li className="flex items-center gap-5">
+          <Link
+            to="/cryptocurrencies"
+            onClick={() => {
+              dispatch({
+                type: SET_INSTRUMENT_TYPE,
+                payload: { instrumentType: "cryptocurrencies" },
+              });
+            }}
+          >
+            Currencies
+          </Link>
+          <Link
+            to="/cryptoexchanges"
+            onClick={() => {
+              dispatch({
+                type: SET_INSTRUMENT_TYPE,
+                payload: { instrumentType: "cryptoexchanges" },
+              });
+            }}
+          >
+            Exchanges
+          </Link>
+          <Link className="flex items-center gap-5">
             <p className="whitespace-nowrap">Base Currency</p>
             <DropdownMenu
               valueList={baseCurrencyList}
               handleSetMenuFun={handleSetCurrency}
               currentValue={baseCurrency.toUpperCase()}
-              menuClasses={`bg-utility-bg cursor-pointer px-5 py-2  rounded text-center text-[0.8rem] font-[600] flex items-center justify-between gap-3 relative transition-transform`}
+              menuClasses={`bg-utility-bg cursor-pointer px-5 py-2  rounded text-center text-[0.8rem] font-[600] flex items-center justify-between gap-3 relative transition-transform text-[#333]`}
               menuContainerClasses={`absolute top-[100%] left-0 w-full  bg-utility-bg cursor-pointer  rounded transition-all z-40 overflow-hidden max-h-[15vh] overflow-y-auto`}
               menuItemClasses={`border-t-[1px] border-[#0000000c] px-5 py-2 hover:bg-[#00000008]`}
             />
-          </li>
-          <li>test</li>
-          <li>test</li>
+          </Link>
         </ul>
       )}
     </nav>

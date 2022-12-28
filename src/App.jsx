@@ -1,29 +1,21 @@
 import React, { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
-// components
-import Navbar from "./components/navbar/Navbar";
-import Carousel from "./components/carousel/Carousel";
-import Header from "./components/header/Header";
-import Table from "./components/table/Table";
-import Modal from "./components/modal/Modal";
-
-// context
-import { CryptoContext } from "./context/CryptoContext";
+// pages
+import Home from "./pages/Home.jsx";
+import CryptoCurrencies from "./pages/CryptoCurrencies.jsx";
+import CryptoExchanges from "./pages/CryptoExchanges.jsx";
 
 const App = () => {
   // context
-  const { modal, isLoading } = useContext(CryptoContext);
+
   return (
-    <>
-      <div className="app z-0">
-        <Navbar />
-        <Carousel />
-        <Header />
-        <Table />
-        {modal && <Modal />}
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route exact path="/cryptocurrencies" element={<CryptoCurrencies />} />
+      <Route exact path="/cryptoexchanges" element={<CryptoExchanges />} />
+    </Routes>
   );
 };
 
