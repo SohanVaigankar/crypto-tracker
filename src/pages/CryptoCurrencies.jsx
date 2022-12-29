@@ -30,7 +30,7 @@ const CryptoCurrencies = () => {
 
   // changing table data according to the instrument type
   useEffect(() => {
-    showFavourites === false ? setData(cryptoData) : setData(favouriteList);
+    showFavourites === false ? setData(cryptoData) : setData(favouriteList.cryptocurrencies);
   }, [instrumentType, cryptoData, favouriteList, showFavourites]);
 
   const title =
@@ -38,9 +38,6 @@ const CryptoCurrencies = () => {
       ? "Top 100 Cryptocurrencies by Market Cap"
       : "My Favourites";
       
-
-      // console.log(cryptoData)
-
   return (
     <div className=" z-0">
       <Navbar />

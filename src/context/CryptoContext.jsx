@@ -21,7 +21,10 @@ const initialState = {
   modal: null,
   isLoading: false,
   showFavourites: false,
-  favouriteList: [],
+  favouriteList: {
+    cryptocurrencies: [],
+    cryptoexchanges: [],
+  },
   instrumentType: "cryptocurrencies",
   // btcExchangeRates: [],
 };

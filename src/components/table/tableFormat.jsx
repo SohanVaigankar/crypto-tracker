@@ -1,3 +1,5 @@
+import { v4 } from "uuid";
+
 // icons
 
 import starIcon from "../../assets/icons/star_icon.svg";
@@ -54,13 +56,15 @@ export const currencyColumns = [
       return (
         <img
           src={
-            params.favouriteList.includes(params.instrument)
+            params.favouriteList[params?.instrumentType]?.includes(
+              params.instrument
+            )
               ? starFullIcon
               : starIcon
           }
           className={`fav-icon font-[400] h-[1rem] text-[1rem] text-center ${listOfClasses[0]}`}
           alt={"favourite"}
-          key={params.tableIndex}
+          key={v4()}
           onClick={(e) => {
             e.stopPropagation();
             params.dispatch({
@@ -78,10 +82,7 @@ export const currencyColumns = [
     headerName: "#",
     renderCell: (params) => {
       return (
-        <div
-          className={`serial-no hidden ${listOfClasses[1]}`}
-          key={params.tableIndex}
-        >
+        <div className={`serial-no hidden ${listOfClasses[1]}`} key={v4()}>
           {params.index + 1}
         </div>
       );
@@ -96,7 +97,7 @@ export const currencyColumns = [
       return (
         <div
           className={`image-cell flex justify-start items-center gap-[0.3rem] sm:gap-2 text-start ${listOfClasses[2]}`}
-          key={params.tableIndex}
+          key={v4()}
         >
           <img
             className="cell-img h-[1.5rem] w-[1.5rem]"
@@ -119,7 +120,7 @@ export const currencyColumns = [
     renderCell: (params) => {
       return (
         <div
-          key={params.tableIndex}
+          key={v4()}
           className={`price-cell ${listOfClasses[3]}`}
         >{`${getCurrencySymbol(params.baseCurrency)} ${parseFloat(
           currencySymbolList?.baseCurrency?.category === "cryptocurrency"
@@ -139,7 +140,7 @@ export const currencyColumns = [
       ).toLocaleString();
       return (
         <div
-          key={params.tableIndex}
+          key={v4()}
           className={`daily-performance-cell flex justify-end items-center gap-1 text-start ${listOfClasses[4]}`}
         >
           <img src={percentage >= 0 ? gapUpIcon : gapDownIcon} alt=" " />
@@ -166,7 +167,7 @@ export const currencyColumns = [
       ).toLocaleString();
       return (
         <div
-          key={params.tableIndex}
+          key={v4()}
           className={`weekly-performance-cell flex justify-start  items-center gap-1 text-start ${listOfClasses[5]}`}
         >
           <img src={percentage >= 0 ? gapUpIcon : gapDownIcon} alt=" " />
@@ -191,10 +192,7 @@ export const currencyColumns = [
       let mcap = params.instrument.market_cap;
 
       return (
-        <div
-          className={`market-cap hidden ${listOfClasses[6]}`}
-          key={params.tableIndex}
-        >
+        <div className={`market-cap hidden ${listOfClasses[6]}`} key={v4()}>
           {`${getCurrencySymbol(params.baseCurrency)} ${
             params.screenWidth < 1280
               ? convertNumbers(mcap)
@@ -217,7 +215,7 @@ export const currencyColumns = [
       return (
         <div
           className={`volume flex flex-col justify-end items-end hidden ${listOfClasses[7]}`}
-          key={params.tableIndex}
+          key={v4()}
         >
           <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
             params.screenWidth < 1280
@@ -245,7 +243,7 @@ export const currencyColumns = [
       return (
         <div
           className={`circulation flex flex-col justify-center items-end gap-1 ${listOfClasses[8]}`}
-          key={params.tableIndex}
+          key={v4()}
         >
           <div className="flex gap-1">
             <p>{`${
@@ -275,7 +273,7 @@ export const currencyColumns = [
     classes: listOfClasses[9],
     headerName: "",
     renderCell: (params) => {
-      return <Menu classes={listOfClasses[9]} key={params.tableIndex} />;
+      return <Menu classes={listOfClasses[9]} key={v4()} />;
     },
   },
 ];
@@ -288,16 +286,19 @@ export const exchangesColumns = [
     classes: listOfClasses[0],
     headerName: "",
     renderCell: (params) => {
+      // console.log(params.favouriteList[params?.instrumentType])
       return (
         <img
           src={
-            params.favouriteList.includes(params.instrument)
+            params.favouriteList[params?.instrumentType]?.includes(
+              params.instrument
+            )
               ? starFullIcon
               : starIcon
           }
           className={`fav-icon font-[400] h-[1rem] text-[1rem] text-center ${listOfClasses[0]}`}
           alt={"favourite"}
-          key={"favourite" + params.tableIndex}
+          key={v4()}
           onClick={(e) => {
             e.stopPropagation();
             params.dispatch({
@@ -316,10 +317,7 @@ export const exchangesColumns = [
     headerName: "#",
     renderCell: (params) => {
       return (
-        <div
-          className={`serial-no  ${listOfClasses[1]} w-[4%]`}
-          key={"trustScoreRank" + params.instrument?.trust_score_rank}
-        >
+        <div className={`serial-no  ${listOfClasses[1]} w-[4%]`} key={v4()}>
           {params.instrument?.trust_score_rank}
         </div>
       );
@@ -334,7 +332,7 @@ export const exchangesColumns = [
         <div
           // ${listOfClasses[2]}
           className={`image-cell flex justify-start items-center gap-[0.3rem] sm:gap-2 text-start  w-[50%] sm:w-[50%] md:w-[35%]  xl:w-[25%]  `}
-          key={"name" + params.tableIndex}
+          key={v4()}
         >
           <img
             className="cell-img h-[1.5rem] w-[1.5rem]"
@@ -354,7 +352,7 @@ export const exchangesColumns = [
       return (
         <div
           className={`hidden md:mr-2 sm:flex sm:w-[10%] md:w-[2%] xl:w-[2%]  justify-center`}
-          key={"trustScore" + params.tableIndex}
+          key={v4()}
         >
           {`${params.instrument.trust_score}`}
         </div>
@@ -363,12 +361,9 @@ export const exchangesColumns = [
   },
   {
     field: "volume",
-    classes:`justify-end -mr-16 sm:-mr-24 md:-mr-14 md:mx-5  ${ listOfClasses[7]}`,
+    classes: `justify-end -mr-16 sm:-mr-24 md:-mr-14 md:mx-5  ${listOfClasses[7]}`,
     headerName: "VOLUME(24H)",
     renderCell: (params) => {
-      console.log(
-        params?.btcExchangeRates[params.baseCurrency.toLowerCase()]?.value
-      );
       let volume = convertBtcToCurrency(
         params.instrument.trade_volume_24h_btc,
         params?.btcExchangeRates[params.baseCurrency.toLowerCase()].value
@@ -376,7 +371,7 @@ export const exchangesColumns = [
       return (
         <div
           className={`volume flex flex-col justify-end items-end ${listOfClasses[7]}`}
-          key={"volume" + params.tableIndex}
+          key={v4()}
         >
           <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
             params.screenWidth < 1280
@@ -399,7 +394,7 @@ export const exchangesColumns = [
       return (
         <div
           className={`volume flex flex-col justify-end items-end hidden ${listOfClasses[7]}`}
-          key={"normalizedVolume" + params.tableIndex}
+          key={v4()}
         >
           <div className={``}>{`${getCurrencySymbol(params.baseCurrency)} ${
             params.screenWidth < 1280
@@ -415,12 +410,7 @@ export const exchangesColumns = [
     classes: listOfClasses[9],
     headerName: "",
     renderCell: (params) => {
-      return (
-        <Menu
-          classes={listOfClasses[9]}
-          key={"menu" + params.instrument.trust_score_rank}
-        />
-      );
+      return <Menu classes={listOfClasses[9]} key={v4()} />;
     },
   },
 ];

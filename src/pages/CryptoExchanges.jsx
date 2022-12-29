@@ -33,7 +33,9 @@ const CryptoExchanges = () => {
 
   // changing table data according to the instrument type
   useEffect(() => {
-    showFavourites === false ? setData(exchangeData) : setData(favouriteList);
+    showFavourites === false
+      ? setData(exchangeData)
+      : setData(favouriteList.cryptoexchanges);
   }, [instrumentType, exchangeData, favouriteList, showFavourites]);
 
   const title =

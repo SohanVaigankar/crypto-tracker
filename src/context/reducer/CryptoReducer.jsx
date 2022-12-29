@@ -37,17 +37,42 @@ export const CryptoReducer = (state, action) => {
       return { ...state, baseCurrency: action.payload.baseCurrency };
     case SHOW_FAVOURITE_TOGGLE:
       return { ...state, showFavourites: action.payload.showFavourites };
+
     case FAVOURITE_TOGGLE:
-      return {
-        ...state,
-        favouriteList: state.favouriteList.includes(action.payload.favourite)
-          ? [
-              ...state.favouriteList.filter(
+      // fn to toggle item to/from the favourite list.. return the list of final items
+      const favouriteToggler = (state, action) => {
+        // checking if the item is present in the list
+        return state.favouriteList[state.instrumentType]?.includes(
+          action.payload.favourite
+        )
+          ? // filtering out  items to unfavourite them
+            [
+              ...state.favouriteList[state.instrumentType]?.filter(
                 (element) => element != action.payload.favourite
               ),
             ]
-          : [...state.favouriteList, action.payload.favourite],
+          : // adding to the favourite list
+            [
+              ...state.favouriteList[state.instrumentType],
+              action.payload.favourite,
+            ];
       };
+      // updaing reducer state in a nested object
+      return {
+        ...state,
+        favouriteList: {
+          ...state.favouriteList,
+          cryptocurrencies:
+            state.instrumentType === "cryptocurrencies"
+              ? favouriteToggler(state, action)
+              : [...state.favouriteList.cryptocurrencies],
+          cryptoexchanges:
+            state.instrumentType === "cryptoexchanges"
+              ? favouriteToggler(state, action)
+              : [...state.favouriteList.cryptoexchanges],
+        },
+      };
+
     default:
       return { ...state };
   }

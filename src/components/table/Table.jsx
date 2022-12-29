@@ -84,6 +84,7 @@ const Table = ({
                   favouriteList,
                   baseCurrency,
                   btcExchangeRates,
+                  instrumentType,
                   dispatch,
                 })
               )}

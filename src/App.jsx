@@ -14,8 +14,11 @@ import { CryptoContext } from "./context/CryptoContext";
 const App = () => {
   // context
   const { instrumentType, dispatch } = useContext(CryptoContext);
+
+  // getting url address
   const { pathname } = useLocation();
 
+  // setting up instrument type based on the url
   useEffect(() => {
     if (!pathname.includes(instrumentType)) {
       pathname === "/cryptocurrencies" || pathname === "/"
