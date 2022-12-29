@@ -6,6 +6,7 @@ import "./App.css";
 import Home from "./pages/Home.jsx";
 import CryptoCurrencies from "./pages/CryptoCurrencies.jsx";
 import CryptoExchanges from "./pages/CryptoExchanges.jsx";
+import PageNotFound from "./pages/PageNotFound.jsx";
 
 const App = () => {
   // context
@@ -15,6 +16,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route exact path="/cryptocurrencies" element={<CryptoCurrencies />} />
       <Route exact path="/cryptoexchanges" element={<CryptoExchanges />} />
+      <Route exact path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
