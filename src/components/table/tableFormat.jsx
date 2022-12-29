@@ -33,13 +33,13 @@ function convertNumbers(num) {
 }
 
 const listOfClasses = [
-  "w-[4.5%] sm:w-[5%]  md:w-[2%]",
+  "w-[4.5%] sm:w-[5%]  md:w-[2%] cursor-pointer",
   " w-[1%] md:flex md:w-[1%] -ml-3 lg:ml-0 lg:w-[1.5%] text-center ",
   "ml-1 sm:ml-0 w-[40%] sm:w-[25%] md:w-[25%] md:w-[18%] xl:w-[15%] ",
   "w-[25%] sm:w-[20%] md:w-[16%] md:w-[12%] xl:w-[6%] text-end",
   "mr-4 w-[15%] sm:w-[12%] sm:mr-0 md:w-[8%] xl:w-[7%] text-end",
   "hidden lg:flex lg:w-[8%] xl:w-[7%] text-end justify-end",
-  " sm:flex sm:w-[15%] md:w-[10%] xl:w-[15%] text-end justify-end",
+  " sm:flex sm:w-[15%] md:w-[10%] xl:w-[15%] text-end justify-center",
   "  md:flex md:w-[10%] xl:w-[13%] text-end justify-end",
   " hidden xl:flex xl:w-[13%] text-end justify-end",
   "flex w-[3%] md:w-[3%]",
@@ -79,7 +79,7 @@ export const currencyColumns = [
     renderCell: (params) => {
       return (
         <div
-          className={`serial-no text-center hidden ${listOfClasses[1]}`}
+          className={`serial-no hidden ${listOfClasses[1]}`}
           key={params.tableIndex}
         >
           {params.index + 1}
@@ -312,12 +312,12 @@ export const exchangesColumns = [
   },
   {
     field: "trust-score-rank",
-    classes: listOfClasses[1],
+    classes: `-ml-12 sm:-ml-20 md:-ml-20 lg:-ml-[5rem]   ${listOfClasses[1]}`,
     headerName: "#",
     renderCell: (params) => {
       return (
         <div
-          className={`serial-no text-right ${listOfClasses[1]} w-[4%]`}
+          className={`serial-no  ${listOfClasses[1]} w-[4%]`}
           key={"trustScoreRank" + params.instrument?.trust_score_rank}
         >
           {params.instrument?.trust_score_rank}
@@ -327,12 +327,13 @@ export const exchangesColumns = [
   },
   {
     field: "name",
-    classes: listOfClasses[2],
+    classes: `-ml-8 sm:-ml-14 ${listOfClasses[2]}`,
     headerName: "NAME",
     renderCell: (params) => {
       return (
         <div
-          className={`image-cell flex justify-start items-center gap-[0.3rem] sm:gap-2 text-start ${listOfClasses[2]}`}
+          // ${listOfClasses[2]}
+          className={`image-cell flex justify-start items-center gap-[0.3rem] sm:gap-2 text-start  w-[50%] sm:w-[50%] md:w-[35%]  xl:w-[25%]  `}
           key={"name" + params.tableIndex}
         >
           <img
@@ -347,12 +348,12 @@ export const exchangesColumns = [
   },
   {
     field: "trust-score",
-    classes: `hidden ${listOfClasses[6]}`,
+    classes: `hidden sm:ml-14 sm:-mr-20 md:-mr-24  sm:flex sm:w-[10%] md:w-[2%] xl:w-[2%] text-end justify-end`,
     headerName: "TRUST SCORE",
     renderCell: (params) => {
       return (
         <div
-          className={`hidden ${listOfClasses[6]}`}
+          className={`hidden md:mr-2 sm:flex sm:w-[10%] md:w-[2%] xl:w-[2%]  justify-center`}
           key={"trustScore" + params.tableIndex}
         >
           {`${params.instrument.trust_score}`}
@@ -362,7 +363,7 @@ export const exchangesColumns = [
   },
   {
     field: "volume",
-    classes: listOfClasses[7],
+    classes:`justify-end -mr-16 sm:-mr-24 md:-mr-14 md:mx-5  ${ listOfClasses[7]}`,
     headerName: "VOLUME(24H)",
     renderCell: (params) => {
       console.log(
@@ -388,7 +389,7 @@ export const exchangesColumns = [
   },
   {
     field: "normalized-volume",
-    classes: `hidden ${listOfClasses[7]}`,
+    classes: `hidden  md:-mr-24  ${listOfClasses[7]}`,
     headerName: "NORMALIZED VOLUME(24H)",
     renderCell: (params) => {
       let volume = convertBtcToCurrency(

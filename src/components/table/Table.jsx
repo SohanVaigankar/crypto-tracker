@@ -71,7 +71,7 @@ const Table = ({
         <>
           {currentPageItems.map((instrument, index) => (
             <div
-              className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer p-4  gap-1 relative hover:bg-[#0000000a]"
+              className="flex justify-between items-center border-b-[1px] border-solid border-utility-bg text-[0.8rem] cursor-pointer sm:cursor-default p-4  gap-1 relative hover:bg-[#0000000a]"
               onClick={(e) => handleModal(e, instrument)}
               key={instrument.id}
             >
